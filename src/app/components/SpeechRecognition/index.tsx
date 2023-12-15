@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { TextAlert } from "./TextAlert";
+import useVoiceStore from "@/app/stores/voice";
+import useColorStore from "@/app/stores/color";
 
 export default function SpeechRecognition() {
   const [isListening, setIsListening] = useState(false);
-  const [text, setText] = useState("");
-  const [color, setColor] = useState("");
-  const [error, setError] = useState("");
+  const { text, setError, setText } = useVoiceStore();
+  const { setColor } = useColorStore();
 
   useEffect(() => {
     const SpeechRecognition =
@@ -48,10 +51,7 @@ export default function SpeechRecognition() {
 
   useEffect(() => {
     if (!isListening) {
-      console.info("text?", text);
-      if (text.replace(/\s/g, "").includes("빨간불")) {
-        fetch("http://192.168.1.248/ledon");
-      } else if (text.replace(/\s/g, "").includes("불꺼줘")) {
+      if (text.replace(/\s/g, "").includes("불꺼줘")) {
         fetch("http://192.168.1.248/ledoff");
       } else if (!!text) {
         fetch(`/api/qna?question=${text}`, {
@@ -59,24 +59,36 @@ export default function SpeechRecognition() {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.info("data?", data);
+            // fetch(`http://192.168.1.248/ledon?color=#${data.color}`);
             setColor(data.color);
+            setTimeout(() => {
+              setText("");
+            }, 1500);
           });
       }
     }
   }, [text, isListening]);
 
   return (
-    <div>
-      <button onClick={() => setIsListening((prevState) => !prevState)}>
-        {isListening ? "Stop" : "Start"}
+    <div className="absolute bottom-4 right-4">
+      <button
+        type="button"
+        onClick={() => setIsListening((prevState) => !prevState)}
+        className={`rounded-full bg-white p-2 drop-shadow ${
+          isListening && "animate-pulse"
+        }`}
+      >
+        <Image
+          src="/icon/microphone.png"
+          alt="microphone"
+          width={32}
+          height={32}
+        />
       </button>
-      <p>{text}</p>
-      <button type="button" onClick={() => setText("test")}>
-        test
-      </button>
-      {error && <p>Error: {error}</p>}
-      {color && <p style={{ background: `#${color}` }}>test color.</p>}
+      {isListening && (
+        <div className="absolute top-0 right-0 bottom-0 left-0 rounded-full border-4 border-t-transparent border-blue-400 animate-spin" />
+      )}
+      <TextAlert text={text} />
     </div>
   );
 }
