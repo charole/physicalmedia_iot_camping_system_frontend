@@ -9,21 +9,20 @@ export async function GET(request: NextRequest) {
   const question = request.nextUrl.searchParams.get("question");
 
   const data = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    max_tokens: 64,
     messages: [
       {
-        role: "system",
         content:
-          //'You will be provided with a description of a mood, and your task is to generate the CSS code for a color that matches it. Write your output in json with a single key called "css_code".',
           'You will be provided with a description of a mood, and your task is to generate the CSS code for a color that matches it. The color should be in hexadecimal format (e.g., #FF5733). Write your output in JSON with a single key called "css_code".',
+        role: "system",
       },
       {
-        role: "user",
         content: question,
+        role: "user",
       },
     ],
+    model: "gpt-3.5-turbo",
     temperature: 0.7,
-    max_tokens: 64,
     top_p: 1,
   });
   console.info(data.choices[0].message.content);
