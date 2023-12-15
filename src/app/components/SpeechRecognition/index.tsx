@@ -52,14 +52,16 @@ export default function SpeechRecognition() {
   useEffect(() => {
     if (!isListening) {
       if (text.replace(/\s/g, "").includes("불꺼줘")) {
-        fetch("http://192.168.1.248/ledoff");
+        fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/ledoff`);
       } else if (!!text) {
         fetch(`/api/qna?question=${text}`, {
           method: "GET",
         })
           .then((res) => res.json())
           .then((data) => {
-            // fetch(`http://192.168.1.248/ledon?color=#${data.color}`);
+            fetch(
+              `${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/ledon?color=%23${data.color}`
+            );
             setColor(data.color);
             setTimeout(() => {
               setText("");
