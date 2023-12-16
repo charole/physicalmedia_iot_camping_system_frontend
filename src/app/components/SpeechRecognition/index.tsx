@@ -52,7 +52,7 @@ export default function SpeechRecognition() {
   useEffect(() => {
     if (!isListening) {
       if (text.replace(/\s/g, "").includes("불꺼줘")) {
-        fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/ledoff`);
+        fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/led/off`);
       } else if (!!text) {
         fetch(`/api/qna?question=${text}`, {
           method: "GET",
@@ -60,7 +60,7 @@ export default function SpeechRecognition() {
           .then((res) => res.json())
           .then((data) => {
             fetch(
-              `${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/ledon?color=%23${data.color}`
+              `${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/led/on?color=%23${data.color}`
             );
             setColor(data.color);
             setTimeout(() => {
