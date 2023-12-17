@@ -10,7 +10,7 @@ export default function LedPage() {
   const { color } = useColorStore();
 
   return (
-    <Frame header={{ text: "조명 제어" }}>
+    <Frame header={{ text: "조명 제어", useHome: true }}>
       <Container>
         <SSRSafeSuspense>
           <p style={{ color: `#${color}` }} className="font-bold">

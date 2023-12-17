@@ -37,7 +37,7 @@ export default function GasPage() {
   }, []);
 
   return (
-    <Frame header={{ text: "온습도 수치" }}>
+    <Frame header={{ text: "온습도 수치", useHome: true }}>
       <Container>
         <SSRSafeSuspense>
           <Card title="현재 온습도 수치">
