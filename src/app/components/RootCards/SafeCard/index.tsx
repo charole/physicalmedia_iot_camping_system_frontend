@@ -11,9 +11,9 @@ export function SafeCard() {
 
   useEffect(() => {
     if (isToggled) {
-      fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/window/open`);
+      fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/safe/on`);
     } else {
-      fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/window/close`);
+      fetch(`${process.env.NEXT_PUBLIC_ARDUINO_API_URL}/safe/off`);
     }
   }, [isToggled]);
 
