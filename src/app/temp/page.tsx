@@ -6,6 +6,7 @@ import { Container } from "../components/Container";
 import { Frame } from "../components/Frame";
 import { SSRSafeSuspense } from "../components/SSRSafeSuspense";
 import { useEffectOnce } from "../common/hooks/useEffectOnce";
+import { Skeleton } from "../components/Skeleton";
 
 export default function GasPage() {
   const [temp, setTemp] = useState(0);
@@ -41,8 +42,12 @@ export default function GasPage() {
       <Container>
         <SSRSafeSuspense>
           <Card title="현재 온습도 수치">
-            <p>현재 온도 : {temp}</p>
-            <p>현재 습도 : {humi}</p>
+            <p className="flex items-center mb-2">
+              현재 온도 : {temp ? temp : <Skeleton />}
+            </p>
+            <p className="flex items-center">
+              현재 습도 : {humi ? humi : <Skeleton />}
+            </p>
           </Card>
         </SSRSafeSuspense>
       </Container>

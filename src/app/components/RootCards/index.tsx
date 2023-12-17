@@ -1,4 +1,3 @@
-import { BuzzerCard } from "./BuzzerCard";
 import { DoorCard } from "./DoorCard";
 import { GasCard } from "./GasCard";
 import { LedCard } from "./LedCard";
@@ -13,5 +12,4 @@ export const ROOT_CARD_LIST = [
   { component: SafeCard, key: "safe" },
   { component: DoorCard, key: "door" },
   { component: WindowCard, key: "window" },
-  { component: BuzzerCard, key: "buzzer" },
 ];
