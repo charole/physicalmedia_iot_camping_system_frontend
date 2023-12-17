@@ -6,6 +6,7 @@ import { Container } from "../components/Container";
 import { Frame } from "../components/Frame";
 import { SSRSafeSuspense } from "../components/SSRSafeSuspense";
 import { useEffectOnce } from "../common/hooks/useEffectOnce";
+import { Skeleton } from "../components/Skeleton";
 
 export default function GasPage() {
   const [gas, setGas] = useState("");
@@ -33,7 +34,7 @@ export default function GasPage() {
     <Frame header={{ text: "일산화탄소 수치", useHome: true }}>
       <Container>
         <SSRSafeSuspense>
-          <Card title="현재 일산화탄소 수치">{gas}</Card>
+          <Card title="현재 일산화탄소 수치">{gas ? gas : <Skeleton />}</Card>
         </SSRSafeSuspense>
       </Container>
     </Frame>
