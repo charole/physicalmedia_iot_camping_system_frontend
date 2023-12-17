@@ -30,7 +30,7 @@ export default function GasPage() {
   }, []);
 
   return (
-    <Frame header={{ text: "일산화탄소 수치" }}>
+    <Frame header={{ text: "일산화탄소 수치", useHome: true }}>
       <Container>
         <SSRSafeSuspense>
           <Card title="현재 일산화탄소 수치">{gas}</Card>
